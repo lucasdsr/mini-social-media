@@ -6,7 +6,7 @@ import TaskList from './TaskList'
 const mockTasksList = vi.fn()
 const mockAddTask = vi.fn()
 
-vi.mock('@/contexts/tasks', () => ({
+vi.mock('@/application/tasks', () => ({
   useTaskContext: () => ({
     tasksList: mockTasksList(),
     addTask: mockAddTask

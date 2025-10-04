@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Icon } from '@mui/material'
 
-import { useTaskContext } from '@/contexts/tasks'
+import { useTaskContext } from '@/application/tasks'
 
 import TaskItem from '@/components/molecules/TaskItem/TaskItem'
 

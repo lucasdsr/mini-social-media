@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { TasksProvider } from './contexts'
+import { TasksProvider } from './application/tasks'
 
 import { ThemeProvider } from '@mui/material/styles'
 

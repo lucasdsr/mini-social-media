@@ -1,4 +1,4 @@
-import { Home } from './pages/Home'
+import { Home } from './presentation/pages/Home'
 import { Providers } from './providers'
 
 const App = () => (

@@ -22,7 +22,7 @@ const mockToggleTask = vi.fn()
 const mockDeleteTask = vi.fn()
 const mockEditTask = vi.fn()
 
-vi.mock('@/contexts/tasks', () => ({
+vi.mock('@/application/tasks', () => ({
   useTaskContext: () => ({
     toggleTask: mockToggleTask,
     deleteTask: mockDeleteTask,

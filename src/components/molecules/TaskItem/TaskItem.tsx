@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { Checkbox } from '@mui/material'
 
 import { Input } from '@/components/atoms'
-import { Task, useTaskContext } from '@/contexts/tasks'
+import { Task } from '@/models'
+import { useTaskContext } from '@/application/tasks'
 
 import * as S from './styles'
 

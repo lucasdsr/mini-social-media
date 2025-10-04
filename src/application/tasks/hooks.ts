@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { Context } from './component'
-import { UseTaskState } from './interface'
+import { UseTaskState } from '@/models'
 
 export const useTaskContext = (): UseTaskState => {
   const value = useContext(Context)

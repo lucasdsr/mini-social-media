@@ -8,7 +8,7 @@ import CompletedTasksList from './CompletedTasksList'
 const mockCompletedTasks = vi.fn()
 const mockClearConfirmedTasks = vi.fn()
 
-vi.mock('@/contexts/tasks', () => ({
+vi.mock('@/application/tasks', () => ({
   useTaskContext: () => ({
     completedTasks: mockCompletedTasks(),
     clearConfirmedTasks: mockClearConfirmedTasks

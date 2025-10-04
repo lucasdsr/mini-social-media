@@ -1,4 +1,4 @@
-import { TasksList } from './interface'
+import { TasksList } from '@/models'
 
 const noop = () => {}
 

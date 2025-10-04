@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { TasksList, useTaskContext } from '@/contexts/tasks'
+import { TasksList } from '@/models'
+import { useTaskContext } from '@/application/tasks'
 
 import TaskItem from '@/components/molecules/TaskItem/TaskItem'
 
