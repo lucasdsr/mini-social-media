@@ -17,3 +17,12 @@ export interface UseTaskState {
   toggleTask: (taskId: number) => void
   editTask: (taskId: number, field: string, value: string) => void
 }
+
+export type Post = {
+  userId: number
+  id: number
+  title: string
+  body: string
+}
+
+export type PostsList = Post[]

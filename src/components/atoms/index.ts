@@ -1,1 +1,5 @@
 export * from './Input'
+export * from './UserAvatar'
+export * from './UserInfo'
+export * from './PostTitle'
+export * from './PostBody'

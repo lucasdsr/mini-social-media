@@ -1,9 +1,9 @@
-import { Home } from './presentation/pages/Home'
+import { Feed } from './presentation/pages'
 import { Providers } from './providers'
 
 const App = () => (
   <Providers>
-    <Home />
+    <Feed />
   </Providers>
 )
 
