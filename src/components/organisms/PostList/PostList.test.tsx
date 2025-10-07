@@ -2,7 +2,40 @@ import { render, screen } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '../../../assets/theme'
 import { PostList } from './PostList'
-import { MOCK_POSTS } from '@/application/posts'
+import { Post } from '@/models'
+
+const MOCK_POSTS: Post[] = [
+  {
+    id: 1,
+    userId: 1,
+    title: 'Bem-vindo ao Mini Social Media!',
+    body: 'Este é o primeiro post do nosso mini social media.'
+  },
+  {
+    id: 2,
+    userId: 1,
+    title: 'Segundo Post',
+    body: 'Este é o segundo post.'
+  },
+  {
+    id: 3,
+    userId: 1,
+    title: 'Terceiro Post',
+    body: 'Este é o terceiro post.'
+  },
+  {
+    id: 4,
+    userId: 1,
+    title: 'Quarto Post',
+    body: 'Este é o quarto post.'
+  },
+  {
+    id: 5,
+    userId: 1,
+    title: 'Quinto Post',
+    body: 'Este é o quinto post.'
+  }
+]
 
 const renderWithTheme = (component: React.ReactElement) =>
   render(<ThemeProvider theme={theme}>{component}</ThemeProvider>)

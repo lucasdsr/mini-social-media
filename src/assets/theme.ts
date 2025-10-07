@@ -1,5 +1,22 @@
 import { createTheme } from '@mui/material/styles'
 
+// Declare module to extend the theme
+declare module '@mui/material/styles' {
+  interface Palette {
+    custom: {
+      darkContainer: string
+      inputBackground: string
+    }
+  }
+
+  interface PaletteOptions {
+    custom?: {
+      darkContainer?: string
+      inputBackground?: string
+    }
+  }
+}
+
 export const theme = createTheme({
   palette: {
     mode: 'dark',
@@ -33,6 +50,10 @@ export const theme = createTheme({
     info: {
       main: '#1DA1F2' // Same as primary
     },
-    divider: '#2F3336'
+    divider: '#2F3336',
+    custom: {
+      darkContainer: '#0F1419', // Tom mais escuro para containers
+      inputBackground: '#2F3336' // Cor cinza para fundo dos inputs
+    }
   }
 })

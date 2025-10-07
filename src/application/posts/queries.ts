@@ -48,17 +48,10 @@ export const usePostsByUserQuery = (userId: number) =>
 /**
  * Hook to create a new post
  */
-export const useCreatePostMutate = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: (post: Omit<Post, 'id'>) => postsService.createPost(post),
-    onSuccess: () => {
-      // Invalidate and refetch posts list
-      queryClient.invalidateQueries({ queryKey: postsQueryKeys.lists() })
-    }
+export const useCreatePostMutate = () =>
+  useMutation({
+    mutationFn: (post: Omit<Post, 'id'>) => postsService.createPost(post)
   })
-}
 
 /**
  * Hook to update an existing post

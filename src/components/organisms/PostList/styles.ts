@@ -8,9 +8,10 @@ export const PostListContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),
   border: `1px solid ${theme.palette.primary.dark}`,
   borderRadius: '12px',
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.custom.darkContainer,
   position: 'relative',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
 }))
 
 export const EmptyStateContainer = styled(Box)(({ theme }) => ({

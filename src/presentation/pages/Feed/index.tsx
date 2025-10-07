@@ -3,12 +3,16 @@ import { CircularProgress } from '@mui/material'
 
 import { MainLayout } from '@/components/templates'
 import { PostList } from '@/components/organisms'
+import { CreatePost } from '@/components/molecules'
+import { LoadingOverlay } from '@/components/atoms'
 import { usePosts } from '@/application/posts'
+import { useAppSelector } from '@/application/store/hooks'
 
 import * as S from './style'
 
 export const Feed = () => {
   const { posts, isLoading } = usePosts()
+  const isCreatingPost = useAppSelector(state => state.ui.loading)
 
   if (isLoading) {
     return (
@@ -20,7 +24,10 @@ export const Feed = () => {
 
   return (
     <MainLayout>
-      <PostList posts={posts} />
+      <CreatePost />
+      <LoadingOverlay isLoading={isCreatingPost}>
+        <PostList posts={posts} />
+      </LoadingOverlay>
     </MainLayout>
   )
 }

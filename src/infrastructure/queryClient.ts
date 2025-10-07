@@ -14,19 +14,19 @@ export const queryClient = new QueryClient({
       // Retry failed requests 3 times
       retry: 3,
       // Retry delay with exponential backoff
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
       // Refetch on window focus
       refetchOnWindowFocus: false,
       // Refetch on reconnect
-      refetchOnReconnect: true,
+      refetchOnReconnect: true
     },
     mutations: {
       // Retry failed mutations once
       retry: 1,
       // Retry delay
-      retryDelay: 1000,
-    },
-  },
+      retryDelay: 1000
+    }
+  }
 })
 
 export default queryClient
