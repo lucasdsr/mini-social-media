@@ -12,20 +12,20 @@ describe('UserInfo Component', () => {
 
     expect(screen.getByTestId('user-info')).toBeInTheDocument()
     expect(screen.getByTestId('user-name')).toHaveTextContent('User 1')
-    expect(screen.getByTestId('post-id')).toHaveTextContent('Post #1')
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
   })
 
   it('should handle different user and post IDs correctly', () => {
     renderWithTheme(<UserInfo userId={5} postId={10} />)
 
     expect(screen.getByTestId('user-name')).toHaveTextContent('User 5')
-    expect(screen.getByTestId('post-id')).toHaveTextContent('Post #10')
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
   })
 
-  it('should render both user name and post ID', () => {
+  it('should render both user name and user email', () => {
     renderWithTheme(<UserInfo userId={3} postId={7} />)
 
     expect(screen.getByTestId('user-name')).toBeInTheDocument()
-    expect(screen.getByTestId('post-id')).toBeInTheDocument()
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
   })
 })

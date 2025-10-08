@@ -21,7 +21,7 @@ describe('Post Component (Molecule)', () => {
     expect(screen.getByTestId('user-avatar')).toBeInTheDocument()
     expect(screen.getByTestId('user-info')).toBeInTheDocument()
     expect(screen.getByTestId('user-name')).toBeInTheDocument()
-    expect(screen.getByTestId('post-id')).toBeInTheDocument()
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
     expect(screen.getByTestId('post-title')).toBeInTheDocument()
     expect(screen.getByTestId('post-body')).toBeInTheDocument()
   })
@@ -30,7 +30,7 @@ describe('Post Component (Molecule)', () => {
     renderWithTheme(<Post {...mockPostProps} />)
 
     expect(screen.getByTestId('user-name')).toHaveTextContent('User 1')
-    expect(screen.getByTestId('post-id')).toHaveTextContent('Post #1')
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
     expect(screen.getByTestId('user-avatar')).toHaveTextContent('U1')
   })
 
@@ -55,7 +55,7 @@ describe('Post Component (Molecule)', () => {
     renderWithTheme(<Post {...differentUserProps} />)
 
     expect(screen.getByTestId('user-name')).toHaveTextContent('User 5')
-    expect(screen.getByTestId('post-id')).toHaveTextContent('Post #10')
+    expect(screen.getByTestId('user-email')).toBeInTheDocument()
     expect(screen.getByTestId('user-avatar')).toHaveTextContent('U5')
   })
 

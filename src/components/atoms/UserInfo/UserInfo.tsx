@@ -6,11 +6,12 @@ import * as S from './styles'
 export const UserInfo: React.FC<UserInfoProps> = ({ userId, postId }) => {
   const { data: user } = useUserQuery(userId)
   const userName = user?.name || user?.username || `User ${userId}`
+  const userEmail = user?.email || ''
 
   return (
     <S.UserInfoContainer data-testid='user-info'>
       <S.UserName data-testid='user-name'>{userName}</S.UserName>
-      <S.PostId data-testid='post-id'>Post #{postId}</S.PostId>
+      <S.PostId data-testid='user-email'>{userEmail}</S.PostId>
     </S.UserInfoContainer>
   )
 }
