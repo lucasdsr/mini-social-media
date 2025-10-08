@@ -18,6 +18,35 @@ declare module '@mui/material/styles' {
 }
 
 export const theme = createTheme({
+  typography: {
+    fontFamily:
+      '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 600,
+    h1: {
+      fontWeight: 700
+    },
+    h2: {
+      fontWeight: 600
+    },
+    h3: {
+      fontWeight: 600
+    },
+    h4: {
+      fontWeight: 600
+    },
+    h5: {
+      fontWeight: 500
+    },
+    h6: {
+      fontWeight: 500
+    },
+    button: {
+      fontWeight: 500
+    }
+  },
   palette: {
     mode: 'dark',
     primary: {
