@@ -6,7 +6,6 @@ export const PostListContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing(2),
   padding: theme.spacing(4),
-  border: `1px solid ${theme.palette.primary.dark}`,
   borderRadius: '12px',
   backgroundColor: theme.palette.custom.darkContainer,
   position: 'relative',
