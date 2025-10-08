@@ -7,31 +7,45 @@ export const Container = styled(Box)(() => ({
 
 export const ButtonContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: theme.spacing(2),
+  gap: theme.spacing(1.5),
   justifyContent: 'flex-end',
-  marginTop: theme.spacing(3),
+  marginTop: theme.spacing(2),
   '& .MuiButton-root': {
-    borderRadius: '12px',
+    borderRadius: '8px',
     textTransform: 'none',
-    fontWeight: 600,
-    padding: theme.spacing(1.5, 3),
-    fontSize: '0.95rem'
+    fontWeight: 500,
+    padding: theme.spacing(1, 2),
+    fontSize: '0.875rem',
+    minWidth: '80px'
   },
   '& .MuiButton-contained': {
-    background: `linear-gradient(45deg, ${theme.palette.primary.main} 30%, ${theme.palette.primary.dark} 90%)`,
-    boxShadow: `0 3px 5px 2px ${theme.palette.primary.main}30`,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    boxShadow: `0 2px 4px ${theme.palette.primary.main}25`,
     '&:hover': {
-      background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.main} 90%)`,
-      boxShadow: `0 4px 8px 2px ${theme.palette.primary.main}40`
+      backgroundColor: theme.palette.primary.dark,
+      boxShadow: `0 4px 8px ${theme.palette.primary.main}35`,
+      transform: 'translateY(-1px)'
+    },
+    '&:active': {
+      transform: 'translateY(0)',
+      boxShadow: `0 2px 4px ${theme.palette.primary.main}25`
     }
   },
   '& .MuiButton-outlined': {
-    borderColor: theme.palette.divider,
-    color: theme.palette.text.secondary,
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    backgroundColor: 'transparent',
     '&:hover': {
-      borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
-      backgroundColor: `${theme.palette.primary.main}10`
+      borderColor: theme.palette.primary.dark,
+      color: theme.palette.primary.dark,
+      backgroundColor: `${theme.palette.primary.main}08`,
+      transform: 'translateY(-1px)',
+      boxShadow: `0 2px 4px ${theme.palette.primary.main}15`
+    },
+    '&:active': {
+      transform: 'translateY(0)',
+      boxShadow: 'none'
     }
   }
 }))

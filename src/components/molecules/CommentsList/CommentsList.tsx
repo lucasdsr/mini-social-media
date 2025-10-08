@@ -15,7 +15,10 @@ export const CommentsList: React.FC<CommentsListProps> = ({ comments }) => {
     <S.CommentsContainer>
       {comments.map(comment => (
         <S.CommentItem key={comment.id}>
-          <S.CommentAuthor>{comment.name}</S.CommentAuthor>
+          <S.CommentAuthor>
+            <S.AuthorName>{comment.name}</S.AuthorName>
+            <S.AuthorEmail>{comment.email}</S.AuthorEmail>
+          </S.CommentAuthor>
           <S.CommentBody>{comment.body}</S.CommentBody>
         </S.CommentItem>
       ))}

@@ -52,10 +52,16 @@ export const CommentItem = styled(Box)(({ theme }) => ({
   }
 }))
 
-export const CommentAuthor = styled(Typography)(({ theme }) => ({
+export const CommentAuthor = styled(Box)(({ theme }) => ({
+  marginBottom: theme.spacing(0.75),
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(0.25)
+}))
+
+export const AuthorName = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   fontSize: '0.875rem',
-  marginBottom: theme.spacing(0.75),
   color: theme.palette.primary.light,
   display: 'flex',
   alignItems: 'center',
@@ -68,6 +74,14 @@ export const CommentAuthor = styled(Typography)(({ theme }) => ({
     marginRight: theme.spacing(1),
     opacity: 0.7
   }
+}))
+
+export const AuthorEmail = styled(Typography)(({ theme }) => ({
+  fontSize: '0.75rem',
+  color: theme.palette.text.secondary,
+  fontStyle: 'italic',
+  opacity: 0.8,
+  marginLeft: theme.spacing(1.5) // Align with the name text (after the dot)
 }))
 
 export const CommentBody = styled(Typography)(({ theme }) => ({

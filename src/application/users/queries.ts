@@ -1,6 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { usersService } from '../../infrastructure/services'
-import { User } from '../../models'
 
 // Query keys for consistent caching
 export const usersQueryKeys = {
@@ -31,71 +30,3 @@ export const useUserQuery = (id: number) =>
     select: response => response.data,
     enabled: !!id
   })
-
-/**
- * Hook to create a new user
- */
-export const useCreateUserMutate = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: (user: Omit<User, 'id'>) => usersService.createUser(user),
-    onSuccess: () => {
-      // Invalidate and refetch users list
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.lists() })
-    }
-  })
-}
-
-/**
- * Hook to update an existing user
- */
-export const useUpdateUserMutate = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: ({ id, user }: { id: number; user: Partial<User> }) =>
-      usersService.updateUser(id, user),
-    onSuccess: (data, variables) => {
-      // Update the specific user in cache
-      queryClient.setQueryData(usersQueryKeys.detail(variables.id), data)
-      // Invalidate users list to ensure consistency
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.lists() })
-    }
-  })
-}
-
-/**
- * Hook to partially update a user
- */
-export const usePatchUserMutate = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: ({ id, user }: { id: number; user: Partial<User> }) =>
-      usersService.patchUser(id, user),
-    onSuccess: (data, variables) => {
-      // Update the specific user in cache
-      queryClient.setQueryData(usersQueryKeys.detail(variables.id), data)
-      // Invalidate users list to ensure consistency
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.lists() })
-    }
-  })
-}
-
-/**
- * Hook to delete a user
- */
-export const useDeleteUserMutate = () => {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: (id: number) => usersService.deleteUser(id),
-    onSuccess: (_, id) => {
-      // Remove the user from cache
-      queryClient.removeQueries({ queryKey: usersQueryKeys.detail(id) })
-      // Invalidate users list
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.lists() })
-    }
-  })
-}

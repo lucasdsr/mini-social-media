@@ -35,31 +35,26 @@ export const PostForm: React.FC<PostFormProps> = ({
       <Box component='form' onSubmit={handleSubmit}>
         <TextField
           fullWidth
-          label='Título do Post'
+          label='Post Title'
           value={title}
           onChange={e => onTitleChange(e.target.value)}
           disabled={disabled || isLoading}
-          margin='normal'
+          margin='dense'
           variant='outlined'
           required
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: '12px',
+              borderRadius: '8px',
               backgroundColor: 'custom.inputBackground',
-              boxShadow:
-                'inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05)',
               '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)'
+                border: '1px solid rgba(0, 0, 0, 0.1)'
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.15)',
-                boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.15)'
+                border: '1px solid rgba(0, 0, 0, 0.15)'
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid primary.main',
-                boxShadow:
-                  'inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(25, 118, 210, 0.1)'
+                boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.1)'
               }
             },
             '& .MuiInputLabel-root': {
@@ -69,33 +64,28 @@ export const PostForm: React.FC<PostFormProps> = ({
         />
         <TextField
           fullWidth
-          label='Conteúdo do Post'
+          label='Post Content'
           value={body}
           onChange={e => onBodyChange(e.target.value)}
           disabled={disabled || isLoading}
-          margin='normal'
+          margin='dense'
           variant='outlined'
           multiline
           rows={4}
           required
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: '12px',
+              borderRadius: '8px',
               backgroundColor: 'custom.inputBackground',
-              boxShadow:
-                'inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05)',
               '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.1)'
+                border: '1px solid rgba(0, 0, 0, 0.1)'
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.15)',
-                boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.15)'
+                border: '1px solid rgba(0, 0, 0, 0.15)'
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid primary.main',
-                boxShadow:
-                  'inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(25, 118, 210, 0.1)'
+                boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.1)'
               }
             },
             '& .MuiInputLabel-root': {
@@ -110,14 +100,14 @@ export const PostForm: React.FC<PostFormProps> = ({
             onClick={onCancel}
             disabled={disabled || isLoading}
           >
-            Cancelar
+            Cancel
           </Button>
           <Button
             type='submit'
             variant='contained'
             disabled={disabled || isLoading || !title.trim() || !body.trim()}
           >
-            {isLoading ? 'Postando...' : 'Postar'}
+            {isLoading ? 'Posting...' : 'Post'}
           </Button>
         </S.ButtonContainer>
       </Box>

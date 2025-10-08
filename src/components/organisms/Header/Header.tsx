@@ -19,39 +19,55 @@ export const Header = () => {
       <S.SearchContainer>
         <TextField
           fullWidth
-          placeholder='Pesquisar posts por título, conteúdo ou nome de usuário...'
+          placeholder='Search posts by title, content or username...'
           value={searchTerm}
           onChange={handleSearchChange}
           variant='outlined'
+          size='small'
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
-                <SearchIcon color='action' />
+                <SearchIcon
+                  color='action'
+                  sx={{
+                    fontSize: { xs: '1.2rem', sm: '1.5rem' }
+                  }}
+                />
               </InputAdornment>
             ),
             sx: {
               backgroundColor: 'custom.inputBackground',
-              borderRadius: '12px',
+              borderRadius: { xs: '8px', sm: '12px' },
+              height: { xs: '40px', sm: '48px' },
+              width: '100%',
+              maxWidth: '100%',
+              boxSizing: 'border-box',
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'divider',
-                borderRadius: '12px'
+                borderRadius: { xs: '8px', sm: '12px' }
               },
               '&:hover .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
-                borderRadius: '12px'
+                borderRadius: { xs: '8px', sm: '12px' }
               },
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
-                borderRadius: '12px'
+                borderRadius: { xs: '8px', sm: '12px' }
               }
             }
           }}
           sx={{
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
             '& .MuiInputBase-input': {
               color: 'text.primary',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              padding: { xs: '8px 12px', sm: '12px 16px' },
               '&::placeholder': {
                 color: 'text.secondary',
-                opacity: 1
+                opacity: 1,
+                fontSize: { xs: '0.8rem', sm: '0.875rem' }
               }
             }
           }}

@@ -3,8 +3,8 @@ import { Box } from '@mui/material'
 
 export const HeaderContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.custom.darkContainer,
-  paddingTop: theme.spacing(3),
-  paddingBottom: theme.spacing(3),
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
   paddingLeft: 0,
   paddingRight: 0,
   borderBottom: `1px solid ${theme.palette.divider}`,
@@ -13,7 +13,11 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   zIndex: 1000,
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
   width: '100vw',
-  marginLeft: 'calc(-50vw + 50%)'
+  marginLeft: 'calc(-50vw + 50%)',
+  [theme.breakpoints.up('sm')]: {
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3)
+  }
 }))
 
 export const SearchContainer = styled(Box)(({ theme }) => ({
@@ -21,5 +25,14 @@ export const SearchContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   margin: '0 auto',
   paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2)
+  paddingRight: theme.spacing(2),
+  boxSizing: 'border-box',
+  [theme.breakpoints.up('sm')]: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3)
+  },
+  [theme.breakpoints.up('md')]: {
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4)
+  }
 }))
