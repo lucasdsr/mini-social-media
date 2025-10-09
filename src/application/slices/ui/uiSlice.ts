@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface UiState {
   loading: boolean
+  showSkeleton: boolean
   modals: {
     postDetails: boolean
     createPost: boolean
@@ -10,6 +11,7 @@ interface UiState {
 
 const initialState: UiState = {
   loading: false,
+  showSkeleton: true,
   modals: {
     postDetails: false,
     createPost: false
@@ -23,6 +25,9 @@ export const uiSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload
     },
+    setShowSkeleton: (state, action: PayloadAction<boolean>) => {
+      state.showSkeleton = action.payload
+    },
     openModal: (state, action: PayloadAction<keyof UiState['modals']>) => {
       state.modals[action.payload] = true
     },
@@ -32,6 +37,7 @@ export const uiSlice = createSlice({
   }
 })
 
-export const { setLoading, openModal, closeModal } = uiSlice.actions
+export const { setLoading, setShowSkeleton, openModal, closeModal } =
+  uiSlice.actions
 
 export default uiSlice.reducer

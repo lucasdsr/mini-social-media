@@ -6,4 +6,5 @@ export interface PostListProps {
   isFetchingNextPage?: boolean
   hasNextPage?: boolean
   loadMoreRef?: (node?: Element | null) => void
+  showSkeleton?: boolean
 }

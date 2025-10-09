@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, CircularProgress, Box } from '@mui/material'
 import { PostListProps } from './interfaces'
-import { Post } from '@/components/molecules'
+import { Post, PostCardSkeleton } from '@/components/molecules'
 import * as S from './styles'
 import { PostWithEngagementScore } from '@/models'
 
@@ -10,7 +10,8 @@ export const PostList: React.FC<PostListProps> = ({
   isLoading = false,
   isFetchingNextPage = false,
   hasNextPage = false,
-  loadMoreRef
+  loadMoreRef,
+  showSkeleton = false
 }) => {
   if (isLoading && posts.length === 0) {
     return (
@@ -33,23 +34,29 @@ export const PostList: React.FC<PostListProps> = ({
 
   return (
     <S.PostListContainer>
-      {posts.map(post => (
-        <Post
-          key={post.id}
-          userId={post.userId}
-          id={post.id}
-          title={post.title}
-          body={post.body}
-          engagementScore={
-            'engagementScore' in post
-              ? (post as PostWithEngagementScore).engagementScore
-              : undefined
-          }
-        />
-      ))}
+      {showSkeleton
+        ? // Render skeleton cards
+          Array.from({ length: 4 }).map((_, index) => (
+            <PostCardSkeleton key={`skeleton-${index}`} />
+          ))
+        : // Render actual posts
+          posts.map(post => (
+            <Post
+              key={post.id}
+              userId={post.userId}
+              id={post.id}
+              title={post.title}
+              body={post.body}
+              engagementScore={
+                'engagementScore' in post
+                  ? (post as PostWithEngagementScore).engagementScore
+                  : undefined
+              }
+            />
+          ))}
 
-      {/* Infinite scroll trigger element */}
-      {hasNextPage && (
+      {/* Infinite scroll trigger element - only show when not showing skeleton */}
+      {!showSkeleton && hasNextPage && (
         <Box ref={loadMoreRef} sx={{ height: '20px', margin: '20px 0' }}>
           {isFetchingNextPage && (
             <Box display='flex' justifyContent='center' alignItems='center'>
@@ -59,8 +66,8 @@ export const PostList: React.FC<PostListProps> = ({
         </Box>
       )}
 
-      {/* End of feed message */}
-      {!hasNextPage && posts.length > 0 && (
+      {/* End of feed message - only show when not showing skeleton */}
+      {!showSkeleton && !hasNextPage && posts.length > 0 && (
         <S.EndOfFeedContainer>
           <Typography variant='body2' color='text.secondary'>
             You&apos;ve reached the end of the Feed
