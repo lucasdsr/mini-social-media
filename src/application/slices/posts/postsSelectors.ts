@@ -8,6 +8,13 @@ export const selectSelectedPost = (state: RootState) => state.posts.selectedPost
 export const selectFilters = (state: RootState) => state.posts.filters
 export const selectSortBy = (state: RootState) => state.posts.sortBy
 
+// Comments selectors
+export const selectCommentsState = (state: RootState) => state.comments
+export const selectCommentsByPost = (state: RootState) =>
+  state.comments.commentsByPost
+export const selectCommentTags = (state: RootState) =>
+  state.comments.commentTags
+
 // Computed selectors
 export const selectFilteredPosts = createSelector(
   [selectFilters],
@@ -37,5 +44,22 @@ export const selectSortedPosts = createSelector(
       default:
         return [...posts].sort((a, b) => b.id - a.id)
     }
+  }
+)
+
+// Comment tags selectors
+export const selectCommentTagsById = createSelector(
+  [selectCommentTags],
+  commentTags => (commentId: number) => commentTags[commentId] || []
+)
+
+export const selectCommentsWithTags = createSelector(
+  [selectCommentsByPost, selectCommentTags],
+  (commentsByPost, commentTags) => (postId: number) => {
+    const comments = commentsByPost[postId] || []
+    return comments.map(comment => ({
+      ...comment,
+      tags: commentTags[comment.id] || []
+    }))
   }
 )

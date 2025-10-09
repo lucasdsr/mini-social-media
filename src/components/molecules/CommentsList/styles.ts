@@ -92,3 +92,17 @@ export const CommentBody = styled(Typography)(({ theme }) => ({
   fontStyle: 'italic',
   opacity: 0.9
 }))
+
+export const TagInputWrapper = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(1)
+}))
+
+export const TagActionsContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginTop: theme.spacing(0.5),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(1)
+}))
