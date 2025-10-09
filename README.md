@@ -1,126 +1,210 @@
-# Atomic To-Do List Application
+# Mini Social Media Dashboard
 
-This project is an interactive to-do list application built with React, TypeScript, and Material-UI, following the principles of **Atomic Design**. It provides a clean, responsive interface for managing your daily tasks, allowing you to add, complete, edit, and remove them.
+A modern social media dashboard built with React, TypeScript, and Redux that provides an interactive feed experience with advanced engagement tracking and comment management features.
 
----
+## Technologies
 
-## Objective
+- **React 18** with TypeScript for type-safe component development
+- **Redux Toolkit** for centralized state management
+- **TanStack Query (React Query)** for server state management and caching
+- **Material-UI (MUI)** for modern, responsive UI components
+- **Emotion** for styled components
+- **Axios** for HTTP requests
+- **Vite** for fast development and optimized builds
+- **Vitest** & **React Testing Library** for unit testing
 
-The main objective of this project was to create a robust and maintainable to-do list application by rigorously applying the Atomic Design methodology. This approach emphasizes breaking down the UI into smaller, reusable components, leading to a highly organized and scalable codebase. **TypeScript** was chosen to enhance type safety and improve code structure and maintainability.
-
----
-
-## Features
-
-- **Add New Tasks**: Easily add new tasks to your list.
-- **Mark as Completed**: Checkboxes allow you to mark tasks as completed.
-- **Edit Task Names**: Update task titles directly within the list.
-- **Remove Completed Tasks**: Clear all completed tasks with a dedicated button.
-- **Persistent Storage**: Tasks are saved in your browser's local storage, so they remain even after refreshing the page.
-- **Responsive Design**: The application is designed to be visually appealing and functional across various screen sizes.
-- **Animations & Transitions**: Subtle animations enhance the user experience.
-- **Atomic Design Structure**: Project organized into Atoms, Molecules, Organisms, Templates, and Pages for clarity and reusability.
-- **TypeScript**: Full type safety implemented for task objects, component props, and application logic.
-- **Linting & Formatting**: ESLint and Prettier are configured to ensure consistent code quality and style.
-- **Unit Tests**: Comprehensive unit tests using Vitest and React Testing Library ensure the reliability of key functionalities.
-
----
-
-## Atomic Design Implementation
-
-The project strictly adheres to Atomic Design principles to organize the UI components and project structure:
-
-- **Atoms**: Basic HTML elements or React components that can't be broken down further without losing their meaning.
-  - Examples: `Input` (for task title/description), `Button` (e.g., "Add task", "Clear all"), `Checkbox`.
-- **Molecules**: Groups of atoms assembled together to form a relatively simple, reusable UI component.
-  - Example: `TaskItem` (combining an Input, Checkbox, and Delete Button).
-- **Organisms**: Composed of molecules and/or atoms, forming distinct sections of an interface. They are more complex and provide context.
-  - Examples: `UncompletedTasksList` (list of `TaskItem`s), `CompletedTasksList` (collapsible list of completed `TaskItem`s), `TaskList` (the main container for both lists and controls).
-- **Templates**: Page-level objects that place organisms into a layout. They focus on the content structure rather than actual content.
-  - While not explicitly separated as a distinct folder in this smaller application, the `TaskList` component acts as a template for the main application view.
-- **Pages**: Instances of templates with real content plugged in.
-  - The main application view where `TaskList` is rendered.
-
-This structured approach ensures modularity, reusability, and easier maintenance of the codebase.
-
----
-
-## Technologies Used
-
-The project leverages a modern web development stack:
-
-- **React** (v18.3.1): A JavaScript library for building user interfaces.
-- **TypeScript** (v5.8.3): A superset of JavaScript that adds static types.
-- **Material-UI** (`@mui/material` v7.0.2): A popular React UI framework for pre-built, high-quality components.
-- **Emotion** (`@emotion/react`, `@emotion/styled`): CSS-in-JS library used by Material-UI for styling.
-- **Vite** (v7.0.0): A fast build tool that significantly improves the development experience.
-- **Vitest** (v3.2.4): A blazing fast unit test framework powered by Vite.
-- **React Testing Library** (`@testing-library/react`): Utilities for testing React components in a user-centric way.
-- **ESLint** (v9.30.1): For identifying and reporting on patterns found in ECMAScript/JavaScript code.
-- **Prettier** (v3.6.2): An opinionated code formatter.
-
----
-
-## Getting Started
-
-Follow these steps to set up and run the project locally.
+## Installation and Execution
 
 ### Prerequisites
 
-- Node.js (v18.x or higher recommended)
-- npm or Yarn (yarn is used in this guide)
+- Node.js (v16 or higher)
+- npm or yarn
 
 ### Installation
 
-1.  **Clone the repository:**
+```bash
+# Clone the repository
+git clone <repository-url>
 
-    ```bash
-    git clone [https://github.com/your-username/mini-social-media.git](https://github.com/your-username/mini-social-media.git)
-    cd mini-social-media
-    ```
+# Navigate to project directory
+cd mini-social-media
 
-2.  **Install dependencies:**
+# Install dependencies
+npm install
+```
 
-    ```bash
-    yarn install
-    ```
+### Running the Application
 
-### Running the Project
+```bash
+# Development mode
+npm run dev
 
-1.  **Start the development server:**
+# Build for production
+npm run build
 
-    ```bash
-    yarn dev
-    ```
+# Preview production build
+npm run preview
 
-    This will open the application in your browser, typically at `http://localhost:5173`. The application will automatically reload as you make changes to the source code.
+# Run tests
+npm run test
 
-### Running Tests
+# Lint code
+npm run lint
+```
 
-1.  **Run unit tests:**
+The application will be available at `http://localhost:5173` in development mode.
 
-    ```bash
-    yarn test
-    ```
+## Architecture
 
-    This command will execute all unit tests using Vitest.
+The project follows a **Clean Architecture** approach with clear separation of concerns:
 
-### Building for Production
+### Folder Structure
 
-1.  **Build the project:**
+```
+src/
+├── application/          # Application layer (business logic)
+│   ├── api/             # API configuration and constants
+│   ├── comments/        # Comment-related queries and mutations
+│   ├── contexts/        # React contexts (User context)
+│   ├── engagement/      # Engagement score calculation logic
+│   ├── posts/           # Post-related queries and hooks
+│   ├── slices/          # Redux slices (posts, comments, UI state)
+│   ├── store/           # Redux store configuration
+│   └── users/           # User-related queries
+│
+├── components/          # Presentation components (Atomic Design)
+│   ├── atoms/          # Basic building blocks (Input, Button, Avatar)
+│   ├── molecules/      # Component compositions (Post, CommentsList)
+│   ├── organisms/      # Complex components (Header, PostList)
+│   └── templates/      # Page layouts
+│
+├── infrastructure/      # External integrations
+│   ├── services/       # API service layers
+│   ├── apiClient.ts    # HTTP client configuration
+│   ├── localStorage.ts # Local storage utilities
+│   └── queryClient.ts  # React Query configuration
+│
+├── models/             # Domain models and interfaces
+│   ├── Post.ts
+│   ├── Comment.ts
+│   ├── User.ts
+│   └── EngagementScore.ts
+│
+└── presentation/       # Page components and routing
+    └── pages/
+        └── Feed/       # Feed page with content and logic
+```
 
-    ```bash
-    yarn build
-    ```
+### Design Patterns
 
-    This command compiles the TypeScript code and bundles the application for production, outputting the files to the `dist/` directory.
+- **Atomic Design**: Components organized by complexity level
+- **Container/Presenter Pattern**: Separation of logic and presentation
+- **Custom Hooks**: Reusable logic encapsulation
+- **Service Layer**: Abstraction of API calls
+- **Redux Toolkit**: Predictable state management with slices
 
-### Linting
+### State Management
 
-1.  **Run ESLint:**
+- **Redux**: Global state for posts, comments, and UI state
+- **React Query**: Server state caching, synchronization, and background updates
+- **React Context**: User authentication and session management
 
-    ```bash
-    yarn lint
-    ```
+## Features
 
-    This command will run ESLint to check for code style issues and potential errors.
+### 1. Feed View
+
+- **Post Display**: Shows posts with title, body, and user information
+- **Engagement Score**: Visual representation of post engagement through a color-coded badge system
+  - Score calculation based on likes, comments, and user interactions
+  - Dynamic color coding (Low: gray, Medium: blue, High: gold, Very High: gradient)
+- **User Avatars**: Colorful avatars generated from usernames
+- **Infinite Scroll**: Automatic loading of more posts as user scrolls
+- **Skeleton Loading**: Smooth loading states for better UX
+
+### 2. Post Details & Comments
+
+- **Expandable Comments**: Click to view/hide comments for each post
+- **Reply Functionality**: Reply to individual comments with threaded display
+- **Tag System**:
+  - Autocomplete suggestions while typing tags
+  - Custom tag creation when no suggestions match
+  - Multiple tags per comment
+  - Visual tag display with color-coded badges
+- **Comment Author Info**: Display username and email for each comment
+
+### 3. Filters & Search
+
+- **Text Search**: Search posts by title or body content
+- **Username Filter**: Filter posts by specific user
+- **Real-time Filtering**: Instant results as you type
+- **Clear Filters**: Easy reset to view all posts
+
+### 4. User Experience Enhancements
+
+#### Implemented UX/UI Improvements:
+
+1. **Engagement Score Visualization**
+   - Dynamic color-coded badges showing post popularity
+   - Intuitive visual feedback for user engagement
+   - Tooltip with detailed score breakdown
+
+2. **Optimistic Updates**
+   - Instant UI feedback when creating posts or comments
+   - Seamless experience with background synchronization
+
+3. **Smart Caching**
+   - Intelligent data caching with React Query
+   - Reduced API calls and faster navigation
+   - Background data revalidation
+
+4. **Loading States**
+   - Skeleton screens for smooth loading experience
+   - Progressive content rendering
+   - Loading overlays for actions
+
+5. **Responsive Design**
+   - Mobile-first approach
+   - Adaptive layouts for all screen sizes
+   - Touch-friendly interactions
+
+6. **Local Post Creation**
+   - Create posts directly in the interface
+   - Immediate visual feedback
+   - Persistent storage with localStorage backup
+
+### 5. Testing
+
+- **Unit Tests**: Component testing with Vitest and React Testing Library
+- **Test Coverage**: Critical components and business logic
+- **Test Files**:
+  - `Input.test.tsx`
+  - `PostBody.test.tsx`
+  - `PostTitle.test.tsx`
+  - `UserAvatar.test.tsx`
+  - `UserInfo.test.tsx`
+  - `Post.test.tsx`
+  - `PostList.test.tsx`
+  - `Feed.test.tsx`
+
+## API Reference
+
+The application uses **JSONPlaceholder** as the backend API:
+
+### Base URL
+```
+https://jsonplaceholder.typicode.com
+```
+
+### Caching Strategy
+
+- **Posts**: 10-minute cache with 5-minute stale time
+- **Users**: 30-minute cache with 15-minute stale time
+- **Comments**: 10-minute cache with 5-minute stale time
+- **Background Refetch**: Automatic data revalidation on window focus
+
+---
+
+## License
+
+MIT
+
