@@ -3,6 +3,7 @@ import { Box } from '@mui/material'
 
 export const Container = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(2),
+  maxWidth: '730px',
   backgroundColor: theme.palette.custom.darkContainer,
   borderRadius: '12px',
   border: `1px solid ${theme.palette.divider}`,

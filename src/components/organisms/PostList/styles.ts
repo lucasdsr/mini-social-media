@@ -3,6 +3,7 @@ import { Box } from '@mui/material'
 
 export const PostListContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
+  maxWidth: '700px',
   flexDirection: 'column',
   gap: theme.spacing(2),
   padding: theme.spacing(4),
