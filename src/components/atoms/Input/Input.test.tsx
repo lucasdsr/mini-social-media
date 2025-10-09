@@ -4,20 +4,26 @@ import { Input } from './index'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 vi.mock('./styles', () => ({
-  InputContainer: ({ children, ...props }: any) => (
+  InputContainer: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLDivElement>) => (
     <div data-testid='input-component-container' {...props}>
       {children}
     </div>
   ),
-  InputField: (props: any) => (
+  InputField: (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input data-testid='input-field-editing' {...props} />
   ),
-  InputBox: ({ children, ...props }: any) => (
+  InputBox: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
     <div data-testid='input-box-viewing' {...props}>
       {children}
     </div>
   ),
-  InputText: ({ children, ...props }: any) => (
+  InputText: ({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLSpanElement>) => (
     <span data-testid='input-text-display' {...props}>
       {children}
     </span>

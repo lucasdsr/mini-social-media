@@ -4,7 +4,7 @@ import * as S from './styles'
 
 export interface TagDisplayProps {
   tags: string[]
-  onRemove?: (tag: string) => void
+  onRemove?: (_tag: string) => void // eslint-disable-line @typescript-eslint/no-unused-vars
   editable?: boolean
 }
 

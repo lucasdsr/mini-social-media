@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material'
 type InputType = {
   value?: string
   placeholder?: string
-  onChange: (value: string) => void
+  onChange: (_value: string) => void // eslint-disable-line @typescript-eslint/no-unused-vars
 }
 
 export const Input = ({ value = '', onChange, placeholder }: InputType) => {

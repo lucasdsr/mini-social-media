@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
-import { IconButton } from '@mui/material'
-import { ChatBubbleOutline } from '@mui/icons-material'
+import React from 'react'
 import { PostProps } from './interfaces'
 import {
   UserAvatar,
   UserInfo,
   PostTitle,
   PostBody,
-  CommentsLoading,
-  EngagementScoreBadge
+  CommentsLoading
 } from '../../atoms'
 import { CommentsList } from '../CommentsList'
-import { usePostComments } from '../../../application/posts'
+import { CommentsToggle } from './CommentsToggle'
+import { usePostLogic } from './hooks'
 import * as S from './styles'
 
 export const Post: React.FC<PostProps> = ({
@@ -21,12 +19,8 @@ export const Post: React.FC<PostProps> = ({
   body,
   engagementScore
 }) => {
-  const [showComments, setShowComments] = useState(false)
-  const { comments, isLoading } = usePostComments(id)
-
-  const handleToggleComments = () => {
-    setShowComments(!showComments)
-  }
+  const { showComments, comments, isLoading, handleToggleComments } =
+    usePostLogic(id)
 
   return (
     <S.PostContainer data-testid='post-container'>
@@ -40,27 +34,11 @@ export const Post: React.FC<PostProps> = ({
         <PostBody body={body} maxLines={3} />
 
         <S.CommentsSection>
-          <S.CommentsToggle
+          <CommentsToggle
             onClick={handleToggleComments}
-            data-testid='comments-toggle'
-          >
-            {engagementScore && (
-              <EngagementScoreBadge
-                engagementScore={engagementScore}
-                size='small'
-              />
-            )}
-            <IconButton
-              size='small'
-              color='primary'
-              sx={{ pointerEvents: 'none' }}
-            >
-              <ChatBubbleOutline fontSize='small' />
-            </IconButton>
-            <S.CommentsCount variant='body2' color='text.secondary'>
-              {comments.length}
-            </S.CommentsCount>
-          </S.CommentsToggle>
+            engagementScore={engagementScore}
+            commentsCount={comments.length}
+          />
 
           {showComments && (
             <CommentsLoading isLoading={isLoading}>

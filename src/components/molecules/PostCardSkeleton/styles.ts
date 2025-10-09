@@ -7,7 +7,9 @@ export const PostContainer = styled(Card)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   marginBottom: theme.spacing(2),
   position: 'relative',
-  transition: 'all 0.2s ease-in-out'
+  transition: 'all 0.2s ease-in-out',
+  width: '100%',
+  maxWidth: '700px'
 }))
 
 export const PostContent = styled(CardContent)(({ theme }) => ({

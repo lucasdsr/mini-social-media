@@ -1,9 +1,13 @@
 import React from 'react'
-import { Typography, CircularProgress, Box } from '@mui/material'
 import { PostListProps } from './interfaces'
-import { Post, PostCardSkeleton } from '@/components/molecules'
+import { LoadingState } from './LoadingState'
+import { EmptyState } from './EmptyState'
+import { SkeletonList } from './SkeletonList'
+import { PostItem } from './PostItem'
+import { InfiniteScrollTrigger } from './InfiniteScrollTrigger'
+import { EndOfFeedMessage } from './EndOfFeedMessage'
+import { usePostListLogic } from './hooks'
 import * as S from './styles'
-import { PostWithEngagementScore } from '@/models'
 
 export const PostList: React.FC<PostListProps> = ({
   posts,
@@ -13,67 +17,39 @@ export const PostList: React.FC<PostListProps> = ({
   loadMoreRef,
   showSkeleton = false
 }) => {
-  if (isLoading && posts.length === 0) {
-    return (
-      <S.LoadingContainer>
-        <CircularProgress color='primary' size={60} />
-      </S.LoadingContainer>
-    )
+  const { shouldShowLoading, shouldShowEmpty } = usePostListLogic(
+    posts,
+    isLoading
+  )
+
+  if (shouldShowLoading) {
+    return <LoadingState />
   }
 
-  if (posts.length === 0) {
-    return (
-      <S.EmptyStateContainer>
-        <Typography variant='h6' gutterBottom>
-          No Post Found
-        </Typography>
-        <Typography variant='body2'>Try to share something?</Typography>
-      </S.EmptyStateContainer>
-    )
+  if (shouldShowEmpty) {
+    return <EmptyState />
   }
 
   return (
     <S.PostListContainer>
-      {showSkeleton
-        ? // Render skeleton cards
-          Array.from({ length: 4 }).map((_, index) => (
-            <PostCardSkeleton key={`skeleton-${index}`} />
-          ))
-        : // Render actual posts
-          posts.map(post => (
-            <Post
-              key={post.id}
-              userId={post.userId}
-              id={post.id}
-              title={post.title}
-              body={post.body}
-              engagementScore={
-                'engagementScore' in post
-                  ? (post as PostWithEngagementScore).engagementScore
-                  : undefined
-              }
-            />
-          ))}
-
-      {/* Infinite scroll trigger element - only show when not showing skeleton */}
-      {!showSkeleton && hasNextPage && (
-        <Box ref={loadMoreRef} sx={{ height: '20px', margin: '20px 0' }}>
-          {isFetchingNextPage && (
-            <Box display='flex' justifyContent='center' alignItems='center'>
-              <CircularProgress color='primary' size={40} />
-            </Box>
-          )}
-        </Box>
+      {showSkeleton ? (
+        <SkeletonList />
+      ) : (
+        posts.map(post => <PostItem key={post.id} post={post} />)
       )}
 
-      {/* End of feed message - only show when not showing skeleton */}
-      {!showSkeleton && !hasNextPage && posts.length > 0 && (
-        <S.EndOfFeedContainer>
-          <Typography variant='body2' color='text.secondary'>
-            You&apos;ve reached the end of the Feed
-          </Typography>
-        </S.EndOfFeedContainer>
-      )}
+      <InfiniteScrollTrigger
+        loadMoreRef={loadMoreRef}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        showSkeleton={showSkeleton}
+      />
+
+      <EndOfFeedMessage
+        hasNextPage={hasNextPage}
+        postsLength={posts.length}
+        showSkeleton={showSkeleton}
+      />
     </S.PostListContainer>
   )
 }

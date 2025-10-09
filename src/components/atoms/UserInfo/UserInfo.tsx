@@ -3,7 +3,10 @@ import { useUserQuery } from '@/application/users/queries'
 import { UserInfoProps } from './interfaces'
 import * as S from './styles'
 
-export const UserInfo: React.FC<UserInfoProps> = ({ userId, postId }) => {
+export const UserInfo: React.FC<UserInfoProps> = ({
+  userId,
+  postId: _postId // eslint-disable-line @typescript-eslint/no-unused-vars
+}) => {
   const { data: user } = useUserQuery(userId)
   const userName = user?.name || user?.username || `User ${userId}`
   const userEmail = user?.email || ''

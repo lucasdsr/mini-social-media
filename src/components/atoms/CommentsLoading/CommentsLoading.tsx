@@ -1,5 +1,5 @@
 import React from 'react'
-import { CircularProgress, Box } from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import * as S from './styles'
 
 export interface CommentsLoadingProps {

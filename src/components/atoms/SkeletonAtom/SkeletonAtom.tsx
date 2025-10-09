@@ -9,16 +9,14 @@ export const SkeletonAtom: React.FC<SkeletonAtomProps> = ({
   height,
   animation = 'pulse',
   ...props
-}) => {
-  return (
-    <S.SkeletonContainer width={width} height={height}>
-      <Skeleton
-        variant={variant}
-        width={width}
-        height={height}
-        animation={animation}
-        {...props}
-      />
-    </S.SkeletonContainer>
-  )
-}
+}) => (
+  <S.SkeletonContainer width={width} height={height}>
+    <Skeleton
+      variant={variant}
+      width={width}
+      height={height}
+      animation={animation}
+      {...props}
+    />
+  </S.SkeletonContainer>
+)

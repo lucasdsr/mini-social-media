@@ -8,6 +8,8 @@ export const PostContainer = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   position: 'relative',
   transition: 'all 0.2s ease-in-out',
+  width: '100%',
+  maxWidth: '700px',
   '&:hover': {
     borderColor: theme.palette.primary.main,
     boxShadow: `0 4px 12px ${theme.palette.primary.main}20`,

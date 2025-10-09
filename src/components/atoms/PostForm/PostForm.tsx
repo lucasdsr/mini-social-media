@@ -1,12 +1,14 @@
 import React from 'react'
 import { TextField, Button, Box } from '@mui/material'
 import * as S from './styles'
+import { usePostFormLogic } from './hooks'
+import { getTextFieldStyles } from './utils'
 
 export interface PostFormProps {
   title: string
   body: string
-  onTitleChange: (title: string) => void
-  onBodyChange: (body: string) => void
+  onTitleChange: (_title: string) => void // eslint-disable-line @typescript-eslint/no-unused-vars
+  onBodyChange: (_body: string) => void // eslint-disable-line @typescript-eslint/no-unused-vars
   onSubmit: () => void
   onCancel: () => void
   isLoading?: boolean
@@ -23,12 +25,8 @@ export const PostForm: React.FC<PostFormProps> = ({
   isLoading = false,
   disabled = false
 }) => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!disabled && title.trim() && body.trim()) {
-      onSubmit()
-    }
-  }
+  const { handleSubmit } = usePostFormLogic(onSubmit, disabled)
+  const isFormValid = title.trim() && body.trim()
 
   return (
     <S.Container>
@@ -43,27 +41,7 @@ export const PostForm: React.FC<PostFormProps> = ({
           variant='outlined'
           required
           size='small'
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '6px',
-              backgroundColor: 'custom.inputBackground',
-              fontSize: '0.875rem',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.1)'
-              },
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.15)'
-              },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid primary.main',
-                boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.1)'
-              }
-            },
-            '& .MuiInputLabel-root': {
-              color: 'text.secondary',
-              fontSize: '0.875rem'
-            }
-          }}
+          sx={getTextFieldStyles()}
         />
         <TextField
           fullWidth
@@ -77,27 +55,7 @@ export const PostForm: React.FC<PostFormProps> = ({
           rows={2}
           required
           size='small'
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '6px',
-              backgroundColor: 'custom.inputBackground',
-              fontSize: '0.875rem',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.1)'
-              },
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid rgba(0, 0, 0, 0.15)'
-              },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid primary.main',
-                boxShadow: '0 0 0 2px rgba(25, 118, 210, 0.1)'
-              }
-            },
-            '& .MuiInputLabel-root': {
-              color: 'text.secondary',
-              fontSize: '0.875rem'
-            }
-          }}
+          sx={getTextFieldStyles()}
         />
         <S.ButtonContainer>
           <Button
@@ -113,7 +71,7 @@ export const PostForm: React.FC<PostFormProps> = ({
             size='small'
             type='submit'
             variant='contained'
-            disabled={disabled || isLoading || !title.trim() || !body.trim()}
+            disabled={disabled || isLoading || !isFormValid}
           >
             {isLoading ? 'Posting...' : 'Post'}
           </Button>

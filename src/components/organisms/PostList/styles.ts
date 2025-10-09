@@ -3,7 +3,9 @@ import { Box } from '@mui/material'
 
 export const PostListContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
+  width: '100%',
   maxWidth: '700px',
+  minWidth: '320px',
   flexDirection: 'column',
   gap: theme.spacing(2),
   padding: theme.spacing(4),
@@ -11,7 +13,10 @@ export const PostListContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.custom.darkContainer,
   position: 'relative',
   overflow: 'hidden',
-  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+  [theme.breakpoints.up('sm')]: {
+    minWidth: '700px'
+  }
 }))
 
 export const EmptyStateContainer = styled(Box)(({ theme }) => ({
