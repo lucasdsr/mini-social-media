@@ -20,19 +20,43 @@ export const HeaderContainer = styled(Box)(({ theme }) => ({
   }
 }))
 
-export const SearchContainer = styled(Box)(({ theme }) => ({
+export const HeaderContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(2),
   maxWidth: '1200px',
-  width: '100%',
   margin: '0 auto',
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  boxSizing: 'border-box',
-  [theme.breakpoints.up('sm')]: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
-  },
-  [theme.breakpoints.up('md')]: {
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4)
+  padding: `0 ${theme.spacing(2)}`,
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    gap: theme.spacing(1.5)
+  }
+}))
+
+export const SearchContainer = styled(Box)(({ theme }) => ({
+  flex: 1,
+  maxWidth: '600px',
+  marginRight: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: '100%',
+    marginRight: 0
+  }
+}))
+
+export const UserInfoContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1.5),
+  padding: theme.spacing(1),
+  borderRadius: theme.spacing(1),
+  backgroundColor: 'rgba(29, 161, 242, 0.1)',
+  border: `1px solid rgba(29, 161, 242, 0.2)`,
+  minWidth: '200px',
+  marginLeft: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 'auto',
+    width: '100%',
+    justifyContent: 'center',
+    marginLeft: 0
   }
 }))

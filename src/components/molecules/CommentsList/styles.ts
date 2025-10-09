@@ -35,22 +35,30 @@ export const CommentsContainer = styled(Box)(({ theme }) => ({
   }
 }))
 
-export const CommentItem = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(1.5, 0),
-  position: 'relative',
-  '&:not(:last-child)': {
-    '&::after': {
-      content: '""',
-      position: 'absolute',
-      bottom: 0,
-      left: theme.spacing(1),
-      right: theme.spacing(1),
-      height: '1px',
-      background: `linear-gradient(90deg, transparent, ${theme.palette.divider}, transparent)`,
-      opacity: 0.5
+export const CommentItem = styled(Box)<{ isCurrentUser?: boolean }>(
+  ({ theme, isCurrentUser }) => ({
+    padding: theme.spacing(1.5, 0),
+    position: 'relative',
+    backgroundColor: isCurrentUser ? 'rgba(29, 161, 242, 0.05)' : 'transparent',
+    borderRadius: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    marginBottom: isCurrentUser ? theme.spacing(4) : 0,
+    border: isCurrentUser ? `1px solid rgba(29, 161, 242, 0.2)` : 'none',
+    '&:not(:last-child)': {
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        bottom: isCurrentUser ? `-${theme.spacing(2)}` : 0,
+        left: theme.spacing(1),
+        right: theme.spacing(1),
+        height: '1px',
+        background: `linear-gradient(90deg, transparent, ${theme.palette.divider}, transparent)`,
+        opacity: 0.5
+      }
     }
-  }
-}))
+  })
+)
 
 export const CommentAuthor = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(0.75),
@@ -59,22 +67,28 @@ export const CommentAuthor = styled(Box)(({ theme }) => ({
   gap: theme.spacing(0.25)
 }))
 
-export const AuthorName = styled(Typography)(({ theme }) => ({
-  fontWeight: 600,
-  fontSize: '0.875rem',
-  color: theme.palette.primary.light,
-  display: 'flex',
-  alignItems: 'center',
-  '&::before': {
-    content: '""',
-    width: '4px',
-    height: '4px',
-    borderRadius: '50%',
-    backgroundColor: theme.palette.primary.main,
-    marginRight: theme.spacing(1),
-    opacity: 0.7
-  }
-}))
+export const AuthorName = styled(Typography)<{ isCurrentUser?: boolean }>(
+  ({ theme, isCurrentUser }) => ({
+    fontWeight: 600,
+    fontSize: '0.875rem',
+    color: isCurrentUser
+      ? theme.palette.primary.main
+      : theme.palette.primary.light,
+    display: 'flex',
+    alignItems: 'center',
+    '&::before': {
+      content: '""',
+      width: '4px',
+      height: '4px',
+      borderRadius: '50%',
+      backgroundColor: isCurrentUser
+        ? theme.palette.primary.main
+        : theme.palette.primary.main,
+      marginRight: theme.spacing(1),
+      opacity: isCurrentUser ? 1 : 0.7
+    }
+  })
+)
 
 export const AuthorEmail = styled(Typography)(({ theme }) => ({
   fontSize: '0.75rem',

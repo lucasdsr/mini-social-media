@@ -51,16 +51,13 @@ export const CommentsSection = styled(Box)(({ theme }) => ({
 export const CommentsToggle = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(1),
   marginBottom: theme.spacing(1.5),
-  padding: theme.spacing(1, 1.5),
-  backgroundColor: `color-mix(in srgb, ${theme.palette.background.paper} 60%, ${theme.palette.custom.darkContainer} 40%)`,
-  borderRadius: theme.spacing(2),
-  border: `1px solid ${theme.palette.divider}`,
+  padding: theme.spacing(0.5, 1),
   transition: 'all 0.2s ease-in-out',
   cursor: 'pointer',
+  borderRadius: theme.spacing(1),
   '&:hover': {
-    borderColor: theme.palette.primary.main,
     backgroundColor: `${theme.palette.primary.main}10`
   }
 }))

@@ -92,6 +92,17 @@ export const commentsSlice = createSlice({
       delete state.commentTags[commentId]
       // Save to localStorage
       saveToLocalStorage('commentTags', state.commentTags)
+    },
+    addCommentToPost: (
+      state,
+      action: PayloadAction<{ postId: number; comment: Comment }>
+    ) => {
+      const { postId, comment } = action.payload
+      if (!state.commentsByPost[postId]) {
+        state.commentsByPost[postId] = []
+      }
+      // Add comment to the top of the list
+      state.commentsByPost[postId].unshift(comment)
     }
   }
 })
@@ -104,7 +115,8 @@ export const {
   setCommentTags,
   addCommentTag,
   removeCommentTag,
-  clearCommentTags
+  clearCommentTags,
+  addCommentToPost
 } = commentsSlice.actions
 
 export default commentsSlice.reducer

@@ -45,13 +45,13 @@ export const Post: React.FC<PostProps> = ({ userId, id, title, body }) => {
               <ChatBubbleOutline fontSize='small' />
             </IconButton>
             <S.CommentsCount variant='body2' color='text.secondary'>
-              {comments.length} comment{comments.length !== 1 ? 's' : ''}
+              {comments.length}
             </S.CommentsCount>
           </S.CommentsToggle>
 
           {showComments && (
             <CommentsLoading isLoading={isLoading}>
-              <CommentsList comments={comments} />
+              <CommentsList comments={comments} postId={id} />
             </CommentsLoading>
           )}
         </S.CommentsSection>
