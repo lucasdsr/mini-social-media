@@ -6,6 +6,7 @@ export const PostContainer = styled(Card)(({ theme }) => ({
   borderRadius: '12px',
   border: `1px solid ${theme.palette.divider}`,
   marginBottom: theme.spacing(2),
+  position: 'relative',
   transition: 'all 0.2s ease-in-out',
   '&:hover': {
     boxShadow: `0 4px 12px ${theme.palette.primary.main}20`,

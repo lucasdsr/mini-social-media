@@ -3,9 +3,10 @@ import { Typography, CircularProgress, Box } from '@mui/material'
 import { PostListProps } from './interfaces'
 import { Post } from '@/components/molecules'
 import * as S from './styles'
+import { PostWithEngagementScore } from '@/models'
 
-export const PostList: React.FC<PostListProps> = ({ 
-  posts, 
+export const PostList: React.FC<PostListProps> = ({
+  posts,
   isLoading = false,
   isFetchingNextPage = false,
   hasNextPage = false,
@@ -39,25 +40,30 @@ export const PostList: React.FC<PostListProps> = ({
           id={post.id}
           title={post.title}
           body={post.body}
+          engagementScore={
+            'engagementScore' in post
+              ? (post as PostWithEngagementScore).engagementScore
+              : undefined
+          }
         />
       ))}
-      
+
       {/* Infinite scroll trigger element */}
       {hasNextPage && (
         <Box ref={loadMoreRef} sx={{ height: '20px', margin: '20px 0' }}>
           {isFetchingNextPage && (
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display='flex' justifyContent='center' alignItems='center'>
               <CircularProgress color='primary' size={40} />
             </Box>
           )}
         </Box>
       )}
-      
+
       {/* End of feed message */}
       {!hasNextPage && posts.length > 0 && (
         <S.EndOfFeedContainer>
           <Typography variant='body2' color='text.secondary'>
-            You've reached the end of the Feed
+            You&apos;ve reached the end of the Feed
           </Typography>
         </S.EndOfFeedContainer>
       )}

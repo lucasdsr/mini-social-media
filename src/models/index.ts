@@ -73,8 +73,21 @@ export type PostWithComments = Post & {
   comments: Comment[]
 }
 
+// Engagement Score types
+export type EngagementScore = {
+  value: number
+  level: 'low' | 'medium' | 'high'
+  commentsCount: number
+  titleBonus: number
+  baseBonus: number
+}
+
+export type PostWithEngagementScore = Post & {
+  engagementScore: EngagementScore
+}
+
 export type PostWithUserAndComments = Post & {
   user: User
   comments: Comment[]
-  engagementScore: number
+  engagementScore: EngagementScore
 }

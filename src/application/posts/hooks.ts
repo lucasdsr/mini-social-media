@@ -12,7 +12,8 @@ import {
   setCommentsForPost,
   setLoadingForPost
 } from '../slices/posts/commentsSlice'
-import { Post } from '../../models'
+import { calculateEngagementScores } from '../engagement/engagementService'
+import { Post, PostWithEngagementScore } from '../../models'
 
 export const usePosts = () => {
   const { data: posts = [], isFetching: isLoading } = usePostsQuery()
@@ -20,7 +21,11 @@ export const usePosts = () => {
   const { posts: localPosts, isLoaded } = useAppSelector(
     state => state.localPosts
   )
-  const { searchTerm } = useAppSelector(state => state.posts.filters)
+  const { commentsByPost } = useAppSelector(state => state.comments)
+  const { searchTerm, engagementThreshold } = useAppSelector(
+    state => state.posts.filters
+  )
+  const sortBy = useAppSelector(state => state.posts.sortBy)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -30,6 +35,12 @@ export const usePosts = () => {
   }, [dispatch, isLoaded])
 
   const allPosts = [...localPosts, ...posts]
+
+  // Calculate engagement scores for all posts
+  const postsWithEngagement = useMemo(
+    () => calculateEngagementScores(allPosts, commentsByPost),
+    [allPosts, commentsByPost]
+  )
 
   // Create a map of users for quick lookup
   const usersMap = useMemo(
@@ -44,27 +55,62 @@ export const usePosts = () => {
     [users]
   )
 
-  // Filter posts based on search term
+  // Filter posts based on search term and engagement threshold
   const filteredPosts = useMemo(() => {
-    if (!searchTerm.trim()) {
-      return allPosts
+    let filtered = postsWithEngagement
+
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase()
+      filtered = filtered.filter(post => {
+        const user = usersMap[post.userId]
+        const userName = user?.name || user?.username || `User ${post.userId}`
+
+        return (
+          post.title.toLowerCase().includes(searchLower) ||
+          post.body.toLowerCase().includes(searchLower) ||
+          userName.toLowerCase().includes(searchLower)
+        )
+      })
     }
 
-    const searchLower = searchTerm.toLowerCase()
-
-    return allPosts.filter(post => {
-      const user = usersMap[post.userId]
-      const userName = user?.name || user?.username || `User ${post.userId}`
-
-      return (
-        post.title.toLowerCase().includes(searchLower) ||
-        post.body.toLowerCase().includes(searchLower) ||
-        userName.toLowerCase().includes(searchLower)
+    // Apply engagement threshold filter
+    if (engagementThreshold > 0) {
+      filtered = filtered.filter(
+        post =>
+          'engagementScore' in post &&
+          (post as PostWithEngagementScore).engagementScore.value >=
+            engagementThreshold
       )
-    })
-  }, [allPosts, searchTerm, usersMap])
+    }
 
-  const sortedPosts = filteredPosts.sort((a, b) => b.id - a.id)
+    return filtered
+  }, [postsWithEngagement, searchTerm, engagementThreshold, usersMap])
+
+  // Sort posts based on selected criteria
+  const sortedPosts = useMemo(() => {
+    const posts = [...filteredPosts]
+
+    switch (sortBy) {
+      case 'engagement':
+        return posts.sort((a, b) => {
+          const scoreA =
+            'engagementScore' in a
+              ? (a as PostWithEngagementScore).engagementScore.value
+              : 0
+          const scoreB =
+            'engagementScore' in b
+              ? (b as PostWithEngagementScore).engagementScore.value
+              : 0
+          return scoreB - scoreA
+        })
+      case 'title':
+        return posts.sort((a, b) => a.title.localeCompare(b.title))
+      case 'date':
+      default:
+        return posts.sort((a, b) => b.id - a.id)
+    }
+  }, [filteredPosts, sortBy])
 
   const handleAddLocalPost = (post: Post) => {
     dispatch(addLocalPost(post))

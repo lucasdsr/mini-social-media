@@ -8,6 +8,7 @@ import {
   removeLocalPostsByApiIds,
   loadLocalPosts
 } from '../slices/posts'
+import { calculateEngagementScores } from '../engagement/engagementService'
 import { Post } from '../../models'
 
 export const useInfinitePosts = () => {
@@ -24,6 +25,7 @@ export const useInfinitePosts = () => {
   const { posts: localPosts, isLoaded } = useAppSelector(
     state => state.localPosts
   )
+  const { commentsByPost } = useAppSelector(state => state.comments)
   const { searchTerm } = useAppSelector(state => state.posts.filters)
   const dispatch = useAppDispatch()
 
@@ -54,15 +56,21 @@ export const useInfinitePosts = () => {
     return [...sortedLocalPosts, ...apiPostsInOrder]
   }, [localPosts, allApiPosts])
 
+  // Calculate engagement scores for all posts
+  const postsWithEngagement = useMemo(
+    () => calculateEngagementScores(allPosts, commentsByPost),
+    [allPosts, commentsByPost]
+  )
+
   // Filter posts based on search term
   const filteredPosts = useMemo(() => {
     if (!searchTerm.trim()) {
-      return allPosts
+      return postsWithEngagement
     }
 
     const searchLower = searchTerm.toLowerCase()
 
-    return allPosts.filter(post => {
+    return postsWithEngagement.filter(post => {
       const user = usersMap[post.userId]
       const userName = user?.name || user?.username || `User ${post.userId}`
 
@@ -72,7 +80,7 @@ export const useInfinitePosts = () => {
         userName.toLowerCase().includes(searchLower)
       )
     })
-  }, [allPosts, searchTerm, usersMap])
+  }, [postsWithEngagement, searchTerm, usersMap])
 
   const sortedPosts = filteredPosts
 

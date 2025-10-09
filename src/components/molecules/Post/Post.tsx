@@ -7,13 +7,20 @@ import {
   UserInfo,
   PostTitle,
   PostBody,
-  CommentsLoading
+  CommentsLoading,
+  EngagementScoreBadge
 } from '../../atoms'
 import { CommentsList } from '../CommentsList'
 import { usePostComments } from '../../../application/posts/hooks'
 import * as S from './styles'
 
-export const Post: React.FC<PostProps> = ({ userId, id, title, body }) => {
+export const Post: React.FC<PostProps> = ({
+  userId,
+  id,
+  title,
+  body,
+  engagementScore
+}) => {
   const [showComments, setShowComments] = useState(false)
   const { comments, isLoading } = usePostComments(id)
 
@@ -37,6 +44,12 @@ export const Post: React.FC<PostProps> = ({ userId, id, title, body }) => {
             onClick={handleToggleComments}
             data-testid='comments-toggle'
           >
+            {engagementScore && (
+              <EngagementScoreBadge
+                engagementScore={engagementScore}
+                size='small'
+              />
+            )}
             <IconButton
               size='small'
               color='primary'
