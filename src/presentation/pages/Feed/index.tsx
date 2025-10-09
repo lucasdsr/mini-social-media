@@ -1,53 +1,33 @@
-import React, { useEffect } from 'react'
-import { CircularProgress } from '@mui/material'
+import React from 'react'
 
-import { MainLayout } from '@/components/templates'
-import { PostList } from '@/components/organisms'
-import { CreatePost } from '@/components/molecules'
-import { LoadingOverlay } from '@/components/atoms'
-import { usePosts } from '@/application/posts'
-import { useAppSelector, useAppDispatch } from '@/application/store/hooks'
-import { setShowSkeleton } from '@/application/slices/ui/uiSlice'
-
-import * as S from './style'
+import { LoadingState } from './LoadingState'
+import { FeedContent } from './FeedContent'
+import { useFeedLogic } from './useFeedLogic'
 
 export const Feed = () => {
-  const { posts, isLoading, isFetchingNextPage, hasNextPage, loadMoreRef } =
-    usePosts()
-  const isCreatingPost = useAppSelector(state => state.ui.loading)
-  const showSkeleton = useAppSelector(state => state.ui.showSkeleton)
-  const dispatch = useAppDispatch()
-
-  // Hide skeleton after 2 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(setShowSkeleton(false))
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [dispatch])
+  const {
+    posts,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    loadMoreRef,
+    isCreatingPost,
+    showSkeleton,
+  } = useFeedLogic()
 
   if (isLoading) {
-    return (
-      <S.LoadingContainer>
-        <CircularProgress color='primary' size={60} />
-      </S.LoadingContainer>
-    )
+    return <LoadingState />
   }
 
   return (
-    <MainLayout>
-      <LoadingOverlay isLoading={isCreatingPost}>
-        <CreatePost />
-        <PostList
-          posts={posts}
-          isLoading={isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-          loadMoreRef={loadMoreRef}
-          showSkeleton={showSkeleton}
-        />
-      </LoadingOverlay>
-    </MainLayout>
+    <FeedContent
+      posts={posts}
+      isLoading={isLoading}
+      isFetchingNextPage={isFetchingNextPage}
+      hasNextPage={hasNextPage}
+      loadMoreRef={loadMoreRef}
+      isCreatingPost={isCreatingPost}
+      showSkeleton={showSkeleton}
+    />
   )
 }

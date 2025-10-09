@@ -1,10 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import { ThemeProvider } from '@mui/material/styles'
-import { theme } from '../../../assets/theme'
+import { screen, waitFor } from '@testing-library/react'
 import { Feed } from './index'
-
-const renderWithTheme = (component: React.ReactElement) =>
-  render(<ThemeProvider theme={theme}>{component}</ThemeProvider>)
+import { renderWithTheme } from '../../test-utils'
 
 describe('Feed Page', () => {
   it('should show loading state initially', () => {
@@ -16,7 +12,6 @@ describe('Feed Page', () => {
   it('should render posts after loading', async () => {
     renderWithTheme(<Feed />)
 
-    // Aguarda o loading terminar e os posts aparecerem
     await waitFor(
       () => {
         expect(screen.getAllByTestId('post-container')).toHaveLength(5)
@@ -27,5 +22,18 @@ describe('Feed Page', () => {
     expect(
       screen.getByText('Bem-vindo ao Mini Social Media!')
     ).toBeInTheDocument()
+  })
+
+  it('should handle loading state transition', async () => {
+    renderWithTheme(<Feed />)
+
+    expect(screen.getByRole('progressbar')).toBeInTheDocument()
+
+    await waitFor(
+      () => {
+        expect(screen.getByTestId('create-post')).toBeInTheDocument()
+      },
+      { timeout: 3000 }
+    )
   })
 })
