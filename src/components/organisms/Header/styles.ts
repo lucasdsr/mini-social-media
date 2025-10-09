@@ -28,7 +28,7 @@ export const HeaderContent = styled(Box)(({ theme }) => ({
   margin: '0 auto',
   padding: `0 ${theme.spacing(2)}`,
   width: '100%',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down(600)]: {
     flexDirection: 'column',
     gap: theme.spacing(1.5)
   }
@@ -38,7 +38,7 @@ export const SearchContainer = styled(Box)(({ theme }) => ({
   flex: 1,
   maxWidth: '100%',
   marginRight: 'auto',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down(600)]: {
     maxWidth: '100%',
     marginRight: 0
   }
@@ -57,11 +57,13 @@ export const UserInfoContainer = styled(Box)(({ theme }) => ({
   right: '24px',
   top: '50%',
   transform: 'translateY(-50%)',
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down(1200)]: {
     position: 'static',
     transform: 'none',
-    width: '100%',
     justifyContent: 'center',
     marginBottom: theme.spacing(1)
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%'
   }
 }))

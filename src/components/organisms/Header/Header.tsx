@@ -4,7 +4,8 @@ import {
   InputAdornment,
   Box,
   Avatar,
-  Typography
+  Typography,
+  Tooltip
 } from '@mui/material'
 import { Search as SearchIcon } from '@mui/icons-material'
 import { useAppDispatch, useAppSelector } from '@/application/store/hooks'
@@ -83,40 +84,42 @@ export const Header = () => {
           />
         </S.SearchContainer>
 
-        <S.UserInfoContainer>
-          <Avatar
-            sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: '#1DA1F2',
-              fontSize: '1rem',
-              fontWeight: 600
-            }}
-          >
-            {currentUser.name.charAt(0)}
-          </Avatar>
-          <Box>
-            <Typography
-              variant='body2'
+        <Tooltip title='Mocked user' arrow>
+          <S.UserInfoContainer>
+            <Avatar
               sx={{
-                fontWeight: 600,
-                color: 'text.primary',
-                fontSize: '0.875rem'
+                width: 40,
+                height: 40,
+                backgroundColor: '#1DA1F2',
+                fontSize: '1rem',
+                fontWeight: 600
               }}
             >
-              {currentUser.name}
-            </Typography>
-            <Typography
-              variant='caption'
-              sx={{
-                color: 'text.secondary',
-                fontSize: '0.75rem'
-              }}
-            >
-              @{currentUser.username}
-            </Typography>
-          </Box>
-        </S.UserInfoContainer>
+              {currentUser.name.charAt(0)}
+            </Avatar>
+            <Box>
+              <Typography
+                variant='body2'
+                sx={{
+                  fontWeight: 600,
+                  color: 'text.primary',
+                  fontSize: '0.875rem'
+                }}
+              >
+                {currentUser.name}
+              </Typography>
+              <Typography
+                variant='caption'
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: '0.75rem'
+                }}
+              >
+                @{currentUser.username}
+              </Typography>
+            </Box>
+          </S.UserInfoContainer>
+        </Tooltip>
       </S.HeaderContent>
     </S.HeaderContainer>
   )
