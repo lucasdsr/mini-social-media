@@ -5,7 +5,7 @@ import { MainLayout } from '@/components/templates'
 import { PostList } from '@/components/organisms'
 import { CreatePost } from '@/components/molecules'
 import { LoadingOverlay } from '@/components/atoms'
-import { useInfinitePosts } from '@/application/posts'
+import { usePosts } from '@/application/posts'
 import { useAppSelector, useAppDispatch } from '@/application/store/hooks'
 import { setShowSkeleton } from '@/application/slices/ui/uiSlice'
 
@@ -13,7 +13,7 @@ import * as S from './style'
 
 export const Feed = () => {
   const { posts, isLoading, isFetchingNextPage, hasNextPage, loadMoreRef } =
-    useInfinitePosts()
+    usePosts()
   const isCreatingPost = useAppSelector(state => state.ui.loading)
   const showSkeleton = useAppSelector(state => state.ui.showSkeleton)
   const dispatch = useAppDispatch()
@@ -37,8 +37,8 @@ export const Feed = () => {
 
   return (
     <MainLayout>
-      <CreatePost />
       <LoadingOverlay isLoading={isCreatingPost}>
+        <CreatePost />
         <PostList
           posts={posts}
           isLoading={isLoading}

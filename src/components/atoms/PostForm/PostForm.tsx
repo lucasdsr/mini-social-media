@@ -42,10 +42,12 @@ export const PostForm: React.FC<PostFormProps> = ({
           margin='dense'
           variant='outlined'
           required
+          size='small'
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: '8px',
+              borderRadius: '6px',
               backgroundColor: 'custom.inputBackground',
+              fontSize: '0.875rem',
               '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid rgba(0, 0, 0, 0.1)'
               },
@@ -58,7 +60,8 @@ export const PostForm: React.FC<PostFormProps> = ({
               }
             },
             '& .MuiInputLabel-root': {
-              color: 'text.secondary'
+              color: 'text.secondary',
+              fontSize: '0.875rem'
             }
           }}
         />
@@ -71,12 +74,14 @@ export const PostForm: React.FC<PostFormProps> = ({
           margin='dense'
           variant='outlined'
           multiline
-          rows={4}
+          rows={2}
           required
+          size='small'
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: '8px',
+              borderRadius: '6px',
               backgroundColor: 'custom.inputBackground',
+              fontSize: '0.875rem',
               '& .MuiOutlinedInput-notchedOutline': {
                 border: '1px solid rgba(0, 0, 0, 0.1)'
               },
@@ -89,12 +94,14 @@ export const PostForm: React.FC<PostFormProps> = ({
               }
             },
             '& .MuiInputLabel-root': {
-              color: 'text.secondary'
+              color: 'text.secondary',
+              fontSize: '0.875rem'
             }
           }}
         />
         <S.ButtonContainer>
           <Button
+            size='small'
             type='button'
             variant='outlined'
             onClick={onCancel}
@@ -103,6 +110,7 @@ export const PostForm: React.FC<PostFormProps> = ({
             Cancel
           </Button>
           <Button
+            size='small'
             type='submit'
             variant='contained'
             disabled={disabled || isLoading || !title.trim() || !body.trim()}

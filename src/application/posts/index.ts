@@ -1,3 +1,2 @@
-export { usePosts } from './hooks'
-export { useInfinitePosts } from './useInfinitePosts'
+export { usePosts, usePostComments } from './usePosts'
 export * from './queries'

@@ -11,7 +11,7 @@ import {
   EngagementScoreBadge
 } from '../../atoms'
 import { CommentsList } from '../CommentsList'
-import { usePostComments } from '../../../application/posts/hooks'
+import { usePostComments } from '../../../application/posts'
 import * as S from './styles'
 
 export const Post: React.FC<PostProps> = ({

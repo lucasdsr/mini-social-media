@@ -7,16 +7,15 @@ export const Container = styled(Box)(() => ({
 
 export const ButtonContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(1),
   justifyContent: 'flex-end',
-  marginTop: theme.spacing(2),
+  marginTop: theme.spacing(1.5),
   '& .MuiButton-root': {
-    borderRadius: '8px',
+    borderRadius: '6px',
     textTransform: 'none',
     fontWeight: 500,
-    padding: theme.spacing(1, 2),
-    fontSize: '0.875rem',
-    minWidth: '80px'
+    fontSize: '0.8rem',
+    minWidth: '70px'
   },
   '& .MuiButton-contained': {
     backgroundColor: theme.palette.primary.main,

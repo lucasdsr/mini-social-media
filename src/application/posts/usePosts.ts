@@ -1,22 +1,31 @@
-import { useEffect, useMemo } from 'react'
-import { usePostsQuery } from './queries'
+import React, { useMemo } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { useInfinitePostsQuery } from './queries'
 import { useUsersQuery } from '../users/queries'
-import { useCommentsByPostQuery } from '../comments/queries'
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 import {
   addLocalPost,
   removeLocalPostsByApiIds,
   loadLocalPosts
 } from '../slices/posts'
+import { calculateEngagementScores } from '../engagement/engagementService'
+import { Post, PostWithEngagementScore } from '../../models'
+import { useCommentsByPostQuery } from '../comments/queries'
 import {
   setCommentsForPost,
   setLoadingForPost
 } from '../slices/posts/commentsSlice'
-import { calculateEngagementScores } from '../engagement/engagementService'
-import { Post, PostWithEngagementScore } from '../../models'
 
 export const usePosts = () => {
-  const { data: posts = [], isFetching: isLoading } = usePostsQuery()
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError
+  } = useInfinitePostsQuery()
+
   const { data: users = [] } = useUsersQuery()
   const { posts: localPosts, isLoaded } = useAppSelector(
     state => state.localPosts
@@ -28,21 +37,14 @@ export const usePosts = () => {
   const sortBy = useAppSelector(state => state.posts.sortBy)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isLoaded) {
       dispatch(loadLocalPosts())
     }
   }, [dispatch, isLoaded])
 
-  const allPosts = [...localPosts, ...posts]
+  const allApiPosts = useMemo(() => data?.pages.flat() || [], [data?.pages])
 
-  // Calculate engagement scores for all posts
-  const postsWithEngagement = useMemo(
-    () => calculateEngagementScores(allPosts, commentsByPost),
-    [allPosts, commentsByPost]
-  )
-
-  // Create a map of users for quick lookup
   const usersMap = useMemo(
     () =>
       users.reduce(
@@ -53,6 +55,19 @@ export const usePosts = () => {
         {} as Record<number, (typeof users)[0]>
       ),
     [users]
+  )
+
+  const allPosts = useMemo(() => {
+    const sortedLocalPosts = [...localPosts].sort((a, b) => b.id - a.id)
+    const apiPostsInOrder = [...allApiPosts]
+
+    return [...sortedLocalPosts, ...apiPostsInOrder]
+  }, [localPosts, allApiPosts])
+
+  // Calculate engagement scores for all posts
+  const postsWithEngagement = useMemo(
+    () => calculateEngagementScores(allPosts, commentsByPost),
+    [allPosts, commentsByPost]
   )
 
   // Filter posts based on search term and engagement threshold
@@ -112,20 +127,50 @@ export const usePosts = () => {
     }
   }, [filteredPosts, sortBy])
 
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0.1,
+    rootMargin: '20px',
+    triggerOnce: false,
+    skip: isFetchingNextPage || isLoading // Skip when already loading
+  })
+
+  const isRequestInProgress = React.useRef(false)
+
+  React.useEffect(() => {
+    if (
+      inView &&
+      hasNextPage &&
+      !isFetchingNextPage &&
+      !isLoading &&
+      !isRequestInProgress.current
+    ) {
+      isRequestInProgress.current = true
+      fetchNextPage().finally(() => {
+        setTimeout(() => {
+          isRequestInProgress.current = false
+        }, 100)
+      })
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, isLoading, fetchNextPage])
+
   const handleAddLocalPost = (post: Post) => {
     dispatch(addLocalPost(post))
   }
 
-  useEffect(() => {
-    if (posts.length > 0 && localPosts.length > 0) {
-      const apiPostIds = posts.map(post => post.id)
+  React.useEffect(() => {
+    if (allApiPosts.length > 0 && localPosts.length > 0) {
+      const apiPostIds = allApiPosts.map(post => post.id)
       dispatch(removeLocalPostsByApiIds(apiPostIds))
     }
-  }, [posts, localPosts.length, dispatch])
+  }, [allApiPosts, localPosts.length, dispatch])
 
   return {
     posts: sortedPosts,
     isLoading,
+    isError,
+    isFetchingNextPage,
+    hasNextPage,
+    loadMoreRef,
     addLocalPost: handleAddLocalPost
   }
 }
@@ -145,14 +190,14 @@ export const usePostComments = (postId: number) => {
   } = useCommentsByPostQuery(postId)
 
   // Update store when comments are loaded
-  useEffect(() => {
+  React.useEffect(() => {
     if (comments.length > 0) {
       dispatch(setCommentsForPost({ postId, comments }))
     }
   }, [comments, postId, dispatch])
 
   // Update loading state in store
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(setLoadingForPost({ postId, isLoading: isLoading || isFetching }))
   }, [isLoading, isFetching, postId, dispatch])
 
